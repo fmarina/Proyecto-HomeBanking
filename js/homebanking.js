@@ -9,10 +9,6 @@ window.onload = function() {
     actualizarSaldoEnPantalla();
     actualizarLimiteEnPantalla();
     iniciarSesion();
-   /*cargarNombreEnPantalla() lo puse en la funcion IniciarSesion() y lo saqué de aqui para que no lo cargue
-    cuando se carga el sitio, con la finalidad de que si el usuario intenta ingresar sin sus datos o con datos
-    incorrectos no cargué la variable nombreUsuario.
-   */
 }
 
 //Funciones para modificar el saldo de la cuenta.
@@ -25,7 +21,6 @@ function restarSaldoCuenta(cantidadDinero)
     saldoCuenta -= cantidadDinero;
 }
 
-//Funciones que tenes que completar
 function cambiarLimiteDeExtraccion() {
     var nuevoLimiteExtraccion = prompt("Ingrese nuevo limite de extraccion:");
     if(validarDatoIngresado(nuevoLimiteExtraccion)){
@@ -101,72 +96,45 @@ function depositarDinero() {
     }
 }
 
-function pagarServicio() {
+function pagarServicio(){
     var precioAgua = 350;
     var precioTelefono = 425;
     var precioLuz = 210;
     var precioInternet = 570;
-    var servicioAPagar = prompt("Ingrese el numero que corresponda con el servicio que desea pagar:" +
-                                         "\n1- Agua \n2- Telefono \n3- Luz \n4- Internet");    
-    if(validarDatoIngresado(servicioAPagar)){
+    var servicioAPagar = prompt("Ingrese el numero que corresponda con el servicio que desea pagar:" + "\n1- Agua \n2- Telefono \n3- Luz \n4- Internet");    
+    if(validarDatoIngresado(servicioAPagar)){        
         servicioAPagar = parseInt(servicioAPagar);
         switch(servicioAPagar)
-        {
-            case 1: 
-                if(haySaldoDisponible(precioAgua)){
-                    saldoAnterior = saldoCuenta;
-                    restarSaldoCuenta(precioAgua);
-                    actualizarSaldoEnPantalla();
-                    alert("Has pagado el servicio de Agua \nSaldo anterior: $" + saldoAnterior +
-                            "\nDinero descontado: $" + precioAgua + "\nSaldo actual: $" + saldoCuenta);
-                    }
-                    else{
-                        alert("No hay suficiente saldo en tu cuenta para pagar este servicio");                    
-                    }
-                    break;
-            case 2: 
-                    if(haySaldoDisponible(precioTelefono)){
-                        saldoAnterior = saldoCuenta;
-                        restarSaldoCuenta(precioTelefono);
-                        actualizarSaldoEnPantalla();
-                        alert("Has pagado el servicio de Telefono \nSaldo anterior: $" + saldoAnterior +
-                            "\nDinero descontado: $" + precioTelefono + "\nSaldo actual: $" + saldoCuenta);
-                    }
-                    else{
-                        alert("No hay suficiente saldo en tu cuenta para pagar este servicio");   
-                    }
-                    break;
-            case 3:
-                    if(haySaldoDisponible(precioLuz)){
-                        saldoAnterior = saldoCuenta;
-                        restarSaldoCuenta(precioLuz);
-                        actualizarSaldoEnPantalla();
-                        alert("Has pagado el servicio de Luz \nSaldo anterior: $" + saldoAnterior +
-                            "\nDinero descontado: $" + precioLuz + "\nSaldo actual: $" + saldoCuenta);
-                    }
-                    else{
-                        alert("No hay suficiente saldo en tu cuenta para pagar este servicio");   
-                    }
-                    break;
-            case 4: 
-                    if(haySaldoDisponible(precioInternet)){
-                        saldoAnterior = saldoCuenta;
-                        restarSaldoCuenta(precioInternet);
-                        actualizarSaldoEnPantalla();
-                        alert("Has pagado el servicio de Internet \nSaldo anterior: $" + saldoAnterior +
-                            "\nDinero descontado: $" + precioInternet + "\nSaldo actual: $" + saldoCuenta);
-                    }
-                    else{
-                        alert("No hay suficiente saldo en tu cuenta para pagar este servicio");   
-                    }
+        {   case 1: 
+                operacionPagarServicios(precioAgua, "Agua");
                 break;
-            
+            case 2:
+                operacionPagarServicios(precioTelefono, "Telefono");
+                break;
+            case 3:
+                operacionPagarServicios(precioLuz, "Luz");
+                break;
+            case 4:
+                operacionPagarServicios(precioInternet, "Internet");
+                break;            
             default:
                 alert("No existe el servicio que intenta pagar.");
         }
     }
     else{
         alert("No ha ingresado ningun servicio a pagar");
+    }
+}
+
+function operacionPagarServicios(servicio, nombreServicio){
+    if(validarDatoIngresado(servicio)){
+        saldoAnterior = saldoCuenta;
+        restarSaldoCuenta(servicio);
+        actualizarSaldoEnPantalla();
+        alert("Has pagado el servicio de " + nombreServicio + "\nSaldo anterior: $" + saldoAnterior + "\nDinero descontado: $" + servicio + "\nSaldo actual: $" + saldoCuenta);
+    }
+    else{
+        alert("No hay suficiente saldo en tu cuenta para pagar este servicio");                    
     }
 }
 
