@@ -186,7 +186,7 @@ function iniciarSesion() {
             actualizarSaldoEnPantalla();
             actualizarLimiteEnPantalla();
         }
-        else if(codigoCuenta == codigoIngresado){
+        else if(codigoIngresado === "0000"){
             cargarNombreEnPantalla();
             alert("Bienvenido/a " + nombreUsuario);    
         }
